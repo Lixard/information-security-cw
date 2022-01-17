@@ -188,8 +188,3 @@ class MD5:
         return (
             f"{format(A, '08x')}{format(B, '08x')}{format(C, '08x')}{format(D, '08x')}"
         )
-
-
-if __name__ == "__main__":
-    while True:
-        print("hash: ", MD5.hash(input()))
