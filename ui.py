@@ -1,12 +1,9 @@
-from cgitb import text
 from logging import root
-from os import stat
 import tkinter as tk
 from tkinter import ttk
 from tkinter import scrolledtext
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb
-from turtle import left, setheading, window_height
 
 from md5 import MD5
 
