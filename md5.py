@@ -2,6 +2,7 @@ from math import sin, floor
 from enum import Enum
 import enum
 import struct
+from typing import Union
 from unittest import result
 from bitarray import bitarray
 
@@ -15,16 +16,26 @@ class MD5Buffer(Enum):
 
 class MD5:
     @classmethod
-    def hash(cls, input: str) -> str:
-        bit_array = cls._to_bit_array(input)
+    def from_str(cls, input: str) -> str:
+        return cls._hash(input)
+
+    @classmethod
+    def from_path(cls, filepath: str) -> str:
+        with open(filepath, "rb") as f:
+            bytes = f.read()
+        return cls._hash(bytes)
+    
+    @classmethod
+    def _hash(cls, input: str):
+        bit_array = cls._str_to_bit_array(input)
         aligned_array = cls._align(bit_array)  # step 1
         extended_array = cls._extend(input, aligned_array)  # step 2
         buffers = cls._init_buffers()  # step 3
         cls._loop_calcs(extended_array, buffers)  # step 4 (main calculations)
         return cls._finalize(buffers)
-
+    
     @classmethod
-    def _to_bit_array(cls, input: str) -> bitarray:
+    def _str_to_bit_array(cls, input: Union[str, bytes]) -> bitarray:
         """
         Converts input string to bit array.
 
@@ -35,9 +46,12 @@ class MD5:
             bitarray: bit array
         """
         bit_array = bitarray(endian="big")
-        bit_array.frombytes(input.encode("utf-8"))
+        if isinstance(input, str):
+            bit_array.frombytes(input.encode("utf-8"))
+        elif isinstance(input, bytes):
+            bit_array.frombytes(input)
         return bit_array
-
+    
     @classmethod
     def _align(cls, bit_array: bitarray) -> bitarray:
         """
