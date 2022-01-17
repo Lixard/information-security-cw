@@ -1,3 +1,4 @@
+from cgitb import text
 from distutils import command
 from logging import root
 import tkinter as tk
@@ -63,7 +64,7 @@ class UI:
         self._choose_file_btn = ttk.Button(
             self._file_frame,
             text="...",
-            command=self.choose_file_btn_clicked,
+            command=self._choose_file_btn_clicked,
             width=1,
         )
         self._filepath_field = ttk.Entry(
@@ -81,8 +82,11 @@ class UI:
         self._help_button = ttk.Button(
             self._root, text="Помощь", command=self._help_button_clicked
         )
+        
+        self._log_button = ttk.Button(self._root, text="Сохранить лог", command=self._log_button_clicked, state="disabled")
 
         self._help_button.pack(side="bottom")
+        self._log_button.pack(side="bottom")
         self._hash_button.pack(side="bottom")
         self._result_field.pack(side="bottom")
 
@@ -108,16 +112,26 @@ class UI:
             value: str = self._text_field.get("1.0", tk.END)
             hash: str = MD5.from_str(value)
 
+        
         self._result_field.delete(0, tk.END)
 
         if value.strip() == "":
             return
-        self._result_field.insert(0, hash)
+        self._result_field.insert(0, hash[0])
+        self._log_message = hash[1]
+        self._log_button.config(state="normal")
 
     def _help_button_clicked(self):
         mb.showinfo("Помощь", HELP_MESSAGE)
 
-    def choose_file_btn_clicked(self):
+    def _choose_file_btn_clicked(self):
         self._filename = fd.askopenfilename()
         self._filepath_field.delete(0, tk.END)
         self._filepath_field.insert(0, self._filename)
+        
+    def _log_button_clicked(self):
+        filename = fd.asksaveasfilename(defaultextension=".txt", initialfile="log.txt")
+        if filename == "":
+            return
+        with open(filename, "w") as f:
+            f.write(self._log_message)
