@@ -1,8 +1,7 @@
 from cgitb import text
-from distutils import command
 from logging import root
 import tkinter as tk
-from tkinter import Entry, ttk
+from tkinter import ttk
 from tkinter import scrolledtext
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb
@@ -27,7 +26,9 @@ HELP_MESSAGE = """
 class UI:
     def __init__(self) -> None:
         self._root = tk.Tk()
-        self._root.title("Курсовая по информационной безопасности бАП-181 Борисов Максим")
+        self._root.title(
+            "Курсовая по информационной безопасности бАП-181 Борисов Максим"
+        )
         self._root.resizable(False, False)
         self._main_window()
         self._root.mainloop()
@@ -82,8 +83,13 @@ class UI:
         self._help_button = ttk.Button(
             self._root, text="Помощь", command=self._help_button_clicked
         )
-        
-        self._log_button = ttk.Button(self._root, text="Сохранить лог", command=self._log_button_clicked, state="disabled")
+
+        self._log_button = ttk.Button(
+            self._root,
+            text="Сохранить лог",
+            command=self._log_button_clicked,
+            state="disabled",
+        )
 
         self._help_button.pack(side="bottom")
         self._log_button.pack(side="bottom")
@@ -112,7 +118,6 @@ class UI:
             value: str = self._text_field.get("1.0", tk.END)
             hash: str = MD5.from_str(value)
 
-        
         self._result_field.delete(0, tk.END)
 
         if value.strip() == "":
@@ -128,7 +133,7 @@ class UI:
         self._filename = fd.askopenfilename()
         self._filepath_field.delete(0, tk.END)
         self._filepath_field.insert(0, self._filename)
-        
+
     def _log_button_clicked(self):
         filename = fd.asksaveasfilename(defaultextension=".txt", initialfile="log.txt")
         if filename == "":

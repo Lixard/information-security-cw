@@ -1,5 +1,3 @@
-from asyncio.log import logger
-from itertools import count
 from math import sin, floor
 from enum import Enum
 import struct
