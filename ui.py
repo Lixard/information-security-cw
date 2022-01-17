@@ -26,7 +26,7 @@ HELP_MESSAGE = """
 class UI:
     def __init__(self) -> None:
         self._root = tk.Tk()
-        self._root.title("Информационная безопасность бАП-181 Борисов Максим")
+        self._root.title("Курсовая по информационной безопасности бАП-181 Борисов Максим")
         self._root.resizable(False, False)
         # _call_theme(root)
         self._main_window()
