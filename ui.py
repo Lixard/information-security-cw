@@ -1,5 +1,6 @@
 from cgitb import text
 from logging import root
+from os import stat
 import tkinter as tk
 from tkinter import ttk
 from tkinter import scrolledtext
@@ -109,6 +110,7 @@ class UI:
             self._filepath_field.pack_forget()
             self._file_frame.pack_forget()
         self._result_field.delete(0, tk.END)
+        self._log_button.config(state="disabled")
 
     def _hash_button_clicked(self):
         if self._input_type.get() == "file":
