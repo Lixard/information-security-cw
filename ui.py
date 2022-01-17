@@ -28,7 +28,6 @@ class UI:
         self._root = tk.Tk()
         self._root.title("Курсовая по информационной безопасности бАП-181 Борисов Максим")
         self._root.resizable(False, False)
-        # _call_theme(root)
         self._main_window()
         self._root.mainloop()
 
