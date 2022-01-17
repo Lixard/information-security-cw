@@ -4,9 +4,23 @@ import tkinter as tk
 from tkinter import Entry, ttk
 from tkinter import scrolledtext
 from tkinter import filedialog as fd
+from tkinter import messagebox as mb
 from turtle import left, setheading, window_height
 
 from md5 import MD5
+
+
+HELP_MESSAGE = """
+Программа предназначена для хеширования текстов или файлов.
+
+В зависимости от выбранного режима работы (переключателя) будет предложен либо выбор файла, либо поле для ввода текста.
+
+При нажатии на кнопку "Хешировать" произойдет хеширование с помощью алгоритма MD5.
+
+По завершению работы алгоритма в поле ниже появится результат работы алгоритма(хеш-сумма).
+
+Разработал студент группы бАП-181 Борисов М. А.
+"""
 
 
 class UI:
@@ -102,7 +116,7 @@ class UI:
         self._result_field.insert(0, hash)
 
     def _help_button_clicked(self):
-        pass
+        mb.showinfo("Помощь", HELP_MESSAGE)
 
     def choose_file_btn_clicked(self):
         self._filename = fd.askopenfilename()
